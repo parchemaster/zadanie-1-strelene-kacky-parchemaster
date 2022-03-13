@@ -1,12 +1,19 @@
 package sk.stuba.fei.uim.oop.data.card;
 
-public class Lake extends DuckDeck {
-    private final String name;
-    private boolean isGunpoint;
+import sk.stuba.fei.uim.oop.data.Player;
+import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
 
-    public Lake(String name) {
-        super(name);
+public class DuckDeck {
+
+    private boolean isGunpoint;
+    private final String name;
+
+    public DuckDeck(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean isGunpoint() {

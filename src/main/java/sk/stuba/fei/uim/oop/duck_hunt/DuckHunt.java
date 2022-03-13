@@ -1,20 +1,23 @@
 package sk.stuba.fei.uim.oop.duck_hunt;
 
 import sk.stuba.fei.uim.oop.data.Player;
+import sk.stuba.fei.uim.oop.data.card.DuckDeck;
+import sk.stuba.fei.uim.oop.data.card.Lake;
 import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
 import sk.stuba.fei.uim.oop.data.card.action.Aim;
 import sk.stuba.fei.uim.oop.data.card.action.Shoot;
 import sk.stuba.fei.uim.oop.data.card.action.WildBill;
-import sk.stuba.fei.uim.oop.data.card.move.*;
+import sk.stuba.fei.uim.oop.data.card.action.move.*;
 import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 
-import java.util.List;
+import java.util.*;
 
 
-public class DuckHunt {
-    private List<Player> players;
-    private final ActionCard[] actionCards;
-    private final DuckMove[] duckMovesCards;
+public class DuckHunt  {
+    private List<Player> players = new ArrayList<>();
+    private List<ActionCard> actionCards;
+    private List<DuckDeck> duckDeck;
+    private Board board;
     private int currentPlayer;
     private int roundCounter;
 
@@ -23,7 +26,9 @@ public class DuckHunt {
         int numberOfPlayers = ZKlavesnice.readInt("Enter the number of players");
         creatPlayer(numberOfPlayers);
         this.actionCards = createActionCards();
-        this.duckMovesCards = createDuckMovesCards();
+        this.duckDeck = createDuckDeck();
+        createBord(numberOfPlayers);
+        startGame();
         this.currentPlayer = currentPlayer;
         this.roundCounter = roundCounter;
     }
@@ -33,25 +38,32 @@ public class DuckHunt {
         System.out.println("--- GAME STARTED ---");
         for (this.currentPlayer = 0; getNumberActivePlayers() > 1; this.incrementCounter()) {
             if (this.currentPlayer == 0) {
-                System.out.println("--- ROUND " + (this.roundCounter / this.players.length + 1) + " STARTS ---");
+                System.out.println("--- ROUND " + (this.roundCounter / this.players.size() + 1) + " STARTS ---");
             }
-            Player activePlayer = this.players[this.currentPlayer];
+            Player activePlayer = this.players.get(this.currentPlayer);
             if (!activePlayer.isActive()) {
                 continue;
             }
             System.out.println("--- PLAYER " + activePlayer.getName() + " STARTS TURN ---");
-            System.out.println("Players money: " + activePlayer.getMoney());
-            if (activePlayer.inPrison()) {
-                activePlayer.decrementPrison();
-                endTurn(activePlayer);
-                continue;
+            System.out.println("Player has: " + activePlayer.getDuckList().size() + " ducks");
+            while (activePlayer.getActionCards().size() < 3) {
+                activePlayer.dealCard(actionCards);
             }
-            this.board[activePlayer.throwDice(this.board.length)].activate(activePlayer);
-            endTurn(activePlayer);
+            board.getDuckActiveCards().forEach(duck -> System.out.println((board.getDuckActiveCards().indexOf(duck) + 1) + ": " + duck.getName()));
+            activePlayer.startAction(board);
+
         }
     }
-    //TODO go on here
-//    private void roundCounter()
+
+    private void createBord(int playersCount) {
+        board = new Board(actionCards, duckDeck, playersCount);
+    }
+
+    private void incrementCounter() {
+        this.currentPlayer++;
+        this.currentPlayer %= this.players.size();
+        this.roundCounter++;
+    }
 
     private void creatPlayer(int numberOfPlayers) {
         for (int index = 0; index < numberOfPlayers; index++) {
@@ -68,54 +80,61 @@ public class DuckHunt {
         return sum;
     }
 
-    private DuckMove[] createDuckMovesCards() {
-        var cards = new DuckMove[] {
-                new DuckMarch(),
-                new DuckMarch(),
-                new DuckMarch(),
-                new DuckMarch(),
-                new DuckMarch(),
-                new DuckMarch(),
-
-                new Turboduck(),
-
-                new Scatter(),
-                new Scatter(),
-
-                new DuckDance()
-        };
-        return cards;
+    private List<DuckDeck> createDuckDeck() {
+        var cards = new ArrayList<DuckDeck>();
+        cards.add(new Lake("Water"));
+        cards.add(new Lake("Water"));
+        cards.add(new Lake("Water"));
+        cards.add(new Lake("Water"));
+        cards.add(new Lake("Water"));
+        return  cards;
     }
     
-    private ActionCard[] createActionCards() {
-        var cards = new ActionCard[] {
-                new Aim(),
-                new Aim(),
-                new Aim(),
-                new Aim(),
-                new Aim(),
-                new Aim(),
-                new Aim(),
-                new Aim(),
-                new Aim(),
-                new Aim(),
+    private List<ActionCard> createActionCards() {
+        var cards = new ArrayList<ActionCard>();
+        cards.add(new DuckMarch("Duck March"));
+        cards.add(new DuckMarch("Duck March"));
+        cards.add(new DuckMarch("Duck March"));
+        cards.add(new DuckMarch("Duck March"));
+        cards.add(new DuckMarch("Duck March"));
+        cards.add(new DuckMarch("Duck March"));
 
-                new Shoot(),
-                new Shoot(),
-                new Shoot(),
-                new Shoot(),
-                new Shoot(),
-                new Shoot(),
-                new Shoot(),
-                new Shoot(),
-                new Shoot(),
-                new Shoot(),
-                new Shoot(),
-                new Shoot(),
+        cards.add(new Turboduck("Turboduck"));
 
-                new WildBill(),
-                new WildBill(),
-        };
+        cards.add(new Scatter("Scatter"));
+        cards.add(new Scatter("Scatter"));
+
+        cards.add(new DuckDance("Duck Dance"));
+
+        cards.add(new Aim("Aim"));
+        cards.add(new Aim("Aim"));
+        cards.add(new Aim("Aim"));
+        cards.add(new Aim("Aim"));
+        cards.add(new Aim("Aim"));
+        cards.add(new Aim("Aim"));
+        cards.add(new Aim("Aim"));
+        cards.add(new Aim("Aim"));
+        cards.add(new Aim("Aim"));
+        cards.add(new Aim("Aim"));
+
+        cards.add(new Shoot("Shoot"));
+        cards.add(new Shoot("Shoot"));
+        cards.add(new Shoot("Shoot"));
+        cards.add(new Shoot("Shoot"));
+        cards.add(new Shoot("Shoot"));
+        cards.add(new Shoot("Shoot"));
+        cards.add(new Shoot("Shoot"));
+        cards.add(new Shoot("Shoot"));
+        cards.add(new Shoot("Shoot"));
+        cards.add(new Shoot("Shoot"));
+        cards.add(new Shoot("Shoot"));
+        cards.add(new Shoot("Shoot"));
+
+        cards.add(new WildBill("Wild Bill"));
+        cards.add(new WildBill("Wild Bill"));
+
+        Collections.shuffle(cards);
+        Collections.shuffle(cards);
         return cards;
     }
 }
