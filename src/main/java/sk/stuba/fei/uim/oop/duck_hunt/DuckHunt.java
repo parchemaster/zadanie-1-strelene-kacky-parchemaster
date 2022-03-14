@@ -49,6 +49,7 @@ public class DuckHunt  {
             while (activePlayer.getActionCards().size() < 3) {
                 activePlayer.dealCard(actionCards);
             }
+            //TODO подумаю насчет прицела
             board.getDuckActiveCards().forEach(duck -> System.out.println((board.getDuckActiveCards().indexOf(duck) + 1) + ": " + duck.getName()));
             activePlayer.startAction(board);
 
@@ -136,5 +137,53 @@ public class DuckHunt  {
         Collections.shuffle(cards);
         Collections.shuffle(cards);
         return cards;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public List<ActionCard> getActionCards() {
+        return actionCards;
+    }
+
+    public void setActionCards(List<ActionCard> actionCards) {
+        this.actionCards = actionCards;
+    }
+
+    public List<DuckDeck> getDuckDeck() {
+        return duckDeck;
+    }
+
+    public void setDuckDeck(List<DuckDeck> duckDeck) {
+        this.duckDeck = duckDeck;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public int getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(int currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public int getRoundCounter() {
+        return roundCounter;
+    }
+
+    public void setRoundCounter(int roundCounter) {
+        this.roundCounter = roundCounter;
     }
 }

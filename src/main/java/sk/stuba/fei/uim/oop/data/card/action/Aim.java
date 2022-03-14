@@ -17,11 +17,12 @@ public class Aim extends ActionCard{
     @Override
     public void action(Player player, Board board) {
         var index = ZKlavesnice.readInt("What do you want to target");
-        if (index > 6 || index < 1) {
-            System.out.println("Wrong index, try again");
+        var duck = (Duck)board.getDuckActiveCards().get(index);
+        if (index > 6 || index < 1 && !duck.getIsGunpoint()) {
+            System.out.println("Wrong index or duck is already aimed, try again");
             action(player, board);
         }
-        var duck = board.getDuckActiveCards().get(index);
+        board.getActionDeck().add(new Aim("Aim"));
         duck.setGunpoint(true);
     }
 }

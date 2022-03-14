@@ -12,9 +12,7 @@ public class Duck extends DuckDeck {
 
     @Override
     public String getName() {
-        return name +
-                " gunpoint " +
-                getIsGunpoint();
+        return name + (getIsGunpoint() ? " is aimed" : " isn't aimed");
     }
 
     public boolean getIsGunpoint() {

@@ -15,15 +15,12 @@ public class Shoot extends ActionCard{
     @Override
     public void action(Player player, Board board) {
         var index = ZKlavesnice.readInt("What do you want to shoot");
-        if (index > 6 || index < 1) {
-            System.out.println("Wrong index, try again");
-            action(player, board);
-        }
         var duck = (Duck)board.getDuckActiveCards().get(index);
-        if (!duck.getIsGunpoint()) {
-            System.out.println("Duck has to be aimed at the first");
+        if (index > 6 || index < 1 && !duck.getIsGunpoint()) {
+            System.out.println("Wrong index or duck has to be aimed at the first, try again");
             action(player, board);
         }
+        board.getActionDeck().add(new Shoot("Shoot"));
         board.getDuckActiveCards().remove(duck);
     }
 }

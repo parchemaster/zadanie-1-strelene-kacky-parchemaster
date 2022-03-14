@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Board  {
-    private List<ActionCard> actionActiveCards = new ArrayList<>();
+    //TODO подумаю насчет прицела
+    private List<ActionCard> aimField = new ArrayList<>();
     private List<DuckDeck> duckActiveCards = new ArrayList<>();
     private List<ActionCard> actionDeck;
     private List<DuckDeck> duckDeck;
@@ -52,4 +53,27 @@ public class Board  {
     }
 
 
+    public List<ActionCard> getActionDeck() {
+        return actionDeck;
+    }
+
+    public void setActionDeck(List<ActionCard> actionDeck) {
+        this.actionDeck = actionDeck;
+    }
+
+    public List<DuckDeck> getDuckDeck() {
+        return duckDeck;
+    }
+
+    public void setDuckDeck(List<DuckDeck> duckDeck) {
+        this.duckDeck = duckDeck;
+    }
+
+    public List<ActionCard> getActionActiveCards() {
+        return aimField;
+    }
+
+    public void setActionActiveCards(List<ActionCard> actionActiveCards) {
+        this.aimField = actionActiveCards;
+    }
 }
