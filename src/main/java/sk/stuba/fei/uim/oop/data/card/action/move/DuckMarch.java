@@ -15,12 +15,14 @@ public class DuckMarch extends ActionCard {
 
     @Override
     public void action(Player player, Board board) {
+        //read one more
         board.getActionDeck().add(new DuckMarch("Duck March"));
         var firstDuckOnBoard = (Duck)board.getDuckActiveCards().get(0);
         var duckDeck = board.getDuckDeck();
+        var ducksOnBoard = board.getDuckActiveCards();
         //TODO исправить, потому что утка вкладывается в начало калоды ?
-        board.getDuckActiveCards().remove(firstDuckOnBoard);
-        board.getDuckActiveCards().add(duckDeck.get(0));
+        ducksOnBoard.remove(firstDuckOnBoard);
+        ducksOnBoard.add(duckDeck.get(0));
         duckDeck.add(firstDuckOnBoard);
     }
 }

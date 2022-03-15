@@ -18,21 +18,21 @@ class TurboduckTest {
 
 
     @Test
-    void action(Player player) {
-        var index = ZKlavesnice.readInt("What do you want to target");
+    void action() {
+        var index = 3;
         if (index > 6 || index < 1) {
             System.out.println("Wrong index, try again");
-            action(player);
+            action();
         }
-        var chosenDuck = (Duck)board.getDuckActiveCards().get(index);
+        var chosenDuck = board.getDuckActiveCards().get(index);
         var duckOnDesk = board.getDuckActiveCards();
         swapDucks(chosenDuck, duckOnDesk);
         //TODO проверить забираю ли я карты из колоды когда раздаю игрокам активити карты
-        board.getActionActiveCards().add(new Turboduck("Turbo duck"));
+        board.getActionDeck().add((new Turboduck("Turbo duck")));
     }
 
     @Test
-    void swapDucks(Duck chosenDuck, List<DuckDeck> ducksOnDesk) {
+    void swapDucks(DuckDeck chosenDuck, List<DuckDeck> ducksOnDesk) {
         for (int index = ducksOnDesk.indexOf(chosenDuck); index > 0; index --) {
             var nextDuck = ducksOnDesk.get(index - 1);
             ducksOnDesk.set(index, nextDuck);

@@ -16,13 +16,16 @@ public class WildBill extends ActionCard{
     public void action(Player player, Board board) {
 //        System.out.println("starts wildBill");
         var index = ZKlavesnice.readInt("What do you want to target");
-        var duck = (Duck)board.getDuckActiveCards().get(index);
         if (index > 6 || index < 1) {
             System.out.println("Wrong index, try again");
             action(player, board);
         }
+        var duck = (Duck)board.getDuckActiveCards().get(index);
+        var ducksOnDesk = board.getDuckActiveCards();
         board.getActionDeck().add(new WildBill("Wild Bill"));
+        ducksOnDesk.remove(duck);
+        board.getAimField().set(index, false);
         //TODO проверить забираю ли я карты из колоды когда раздаю игрокам активити карты
-        duck.setGunpoint(true);
+
     }
 }

@@ -22,19 +22,21 @@ public class DuckHunt  {
     private int roundCounter;
 
     public DuckHunt() {
-        System.out.println("Duck hunt is starting");
-        int numberOfPlayers = ZKlavesnice.readInt("Enter the number of players");
-        creatPlayer(numberOfPlayers);
+//        System.out.println("Duck hunt is starting");
+//        int numberOfPlayers = ZKlavesnice.readInt("Enter the number of players");
+//        creatPlayer(numberOfPlayers);
         this.actionCards = createActionCards();
         this.duckDeck = createDuckDeck();
-        createBord(numberOfPlayers);
-        startGame();
+//        createBord(numberOfPlayers);
         this.currentPlayer = currentPlayer;
         this.roundCounter = roundCounter;
     }
 
     //TODO go on here
-    private void startGame() {
+    public void startGame() {
+        int numberOfPlayers = ZKlavesnice.readInt("Enter the number of players");
+        creatPlayer(numberOfPlayers);
+        createBord(numberOfPlayers);
         System.out.println("--- GAME STARTED ---");
         for (this.currentPlayer = 0; getNumberActivePlayers() > 1; this.incrementCounter()) {
             if (this.currentPlayer == 0) {
@@ -50,7 +52,7 @@ public class DuckHunt  {
                 activePlayer.dealCard(actionCards);
             }
             //TODO подумаю насчет прицела
-            board.getDuckActiveCards().forEach(duck -> System.out.println((board.getDuckActiveCards().indexOf(duck) + 1) + ": " + duck.getName()));
+            board.getDuckActiveCards().forEach(duck -> System.out.println((board.getDuckActiveCards().indexOf(duck) + 1) + ": " + board.printDuckInfo(board.getDuckActiveCards().indexOf(duck))));
             activePlayer.startAction(board);
 
         }

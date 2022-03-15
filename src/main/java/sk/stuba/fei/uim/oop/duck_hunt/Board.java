@@ -5,14 +5,11 @@ import sk.stuba.fei.uim.oop.data.card.DuckDeck;
 import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Board  {
-    //TODO подумаю насчет прицела
-    private List<ActionCard> aimField = new ArrayList<>();
+//    private List<Boolean> aimField = new ArrayList<>();
+    List<Boolean> aimField = new ArrayList<Boolean>(Arrays.asList(new Boolean[6]));
     private List<DuckDeck> duckActiveCards = new ArrayList<>();
     private List<ActionCard> actionDeck;
     private List<DuckDeck> duckDeck;
@@ -22,6 +19,7 @@ public class Board  {
     public Board(List<ActionCard> actionDeck, List<DuckDeck> duckDeck, int playersCount) {
         this.actionDeck = actionDeck;
         this.duckDeck = duckDeck;
+        Collections.fill(aimField, Boolean.FALSE);
         addDucksToDeck(playersCount);
         dealCards(6);
     }
@@ -42,6 +40,18 @@ public class Board  {
         }
         Collections.shuffle(duckDeck);
         Collections.shuffle(duckDeck);
+    }
+
+    public List<Boolean> getAimField() {
+        return aimField;
+    }
+
+    public void setAimField(List<Boolean> aimField) {
+        this.aimField = aimField;
+    }
+
+    public String printDuckInfo(int index) {
+        return duckActiveCards.get(index).getName() + (aimField.get(index) ? " is aimed" : " isn't aimed");
     }
 
     public List<DuckDeck> getDuckActiveCards() {
@@ -69,11 +79,5 @@ public class Board  {
         this.duckDeck = duckDeck;
     }
 
-    public List<ActionCard> getActionActiveCards() {
-        return aimField;
-    }
 
-    public void setActionActiveCards(List<ActionCard> actionActiveCards) {
-        this.aimField = actionActiveCards;
-    }
 }

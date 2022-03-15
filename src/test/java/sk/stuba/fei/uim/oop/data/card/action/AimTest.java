@@ -1,25 +1,23 @@
 package sk.stuba.fei.uim.oop.data.card.action;
 
-import sk.stuba.fei.uim.oop.data.Player;
+import org.junit.Test;
 import sk.stuba.fei.uim.oop.data.card.Duck;
 import sk.stuba.fei.uim.oop.duck_hunt.Board;
+import sk.stuba.fei.uim.oop.duck_hunt.DuckHunt;
 import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 
-public class Aim extends ActionCard{
+import static org.junit.Assert.*;
 
-    private final String name;
+public class AimTest {
 
-    public Aim(String name) {
-        super(name);
-        this.name = name;
-    }
-
-    @Override
-    public void action(Player player, Board board) {
-        var index = ZKlavesnice.readInt("What do you want to target");
+    DuckHunt duckHunt = new DuckHunt();
+    Board board = new Board(duckHunt.getActionCards(), duckHunt.getDuckDeck(), 2);
+    @Test
+    public void action() {
+        var index = 3;
         if (index > 6 || index < 1 && board.getAimField().get(index)) {
             System.out.println("Wrong index or duck is already aimed, try again");
-            action(player, board);
+            action();
         }
         board.getActionDeck().add(new Aim("Aim"));
         board.getAimField().set(index, true);

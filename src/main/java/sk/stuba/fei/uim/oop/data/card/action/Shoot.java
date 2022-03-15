@@ -16,11 +16,12 @@ public class Shoot extends ActionCard{
     public void action(Player player, Board board) {
         var index = ZKlavesnice.readInt("What do you want to shoot");
         var duck = (Duck)board.getDuckActiveCards().get(index);
-        if (index > 6 || index < 1 && !duck.getIsGunpoint()) {
+        if (index > 6 || index < 1 && !board.getAimField().get(index)) {
             System.out.println("Wrong index or duck has to be aimed at the first, try again");
             action(player, board);
         }
         board.getActionDeck().add(new Shoot("Shoot"));
         board.getDuckActiveCards().remove(duck);
+        board.getAimField().set(index, false);
     }
 }

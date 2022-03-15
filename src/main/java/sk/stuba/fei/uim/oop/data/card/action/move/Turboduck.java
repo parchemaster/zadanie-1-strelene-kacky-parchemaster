@@ -26,11 +26,12 @@ public class Turboduck extends ActionCard {
             System.out.println("Wrong index, try again");
             action(player, board);
         }
+        //player has to choose exactly duck??
         var chosenDuck = (Duck)board.getDuckActiveCards().get(index);
         var duckOnDesk = board.getDuckActiveCards();
         swapDucks(chosenDuck, duckOnDesk);
         //TODO проверить забираю ли я карты из колоды когда раздаю игрокам активити карты
-        board.getActionActiveCards().add(new Turboduck("Turbo duck"));
+        board.getActionDeck().add(new Turboduck("Turbo duck"));
         //TODO check if I remove action cards from players
         //TODO вероятно нужно заменить буул (прицел) у уток на булл (прицел) на поля
     }
@@ -38,8 +39,6 @@ public class Turboduck extends ActionCard {
     public void swapDucks(Duck chosenDuck, List<DuckDeck> ducksOnDesk) {
         for (int index = ducksOnDesk.indexOf(chosenDuck); index > 0; index --) {
             var nextDuck = ducksOnDesk.get(index - 1);
-//            var curentDuck = (Duck)ducksOnDesk.get(index);
-//            curentDuck = nextDuck;
             ducksOnDesk.set(index, nextDuck);
         }
         ducksOnDesk.set(0, chosenDuck);
