@@ -3,6 +3,7 @@ package sk.stuba.fei.uim.oop.data.card.action.move;
 import sk.stuba.fei.uim.oop.data.Player;
 import sk.stuba.fei.uim.oop.data.card.Duck;
 import sk.stuba.fei.uim.oop.data.card.DuckDeck;
+import sk.stuba.fei.uim.oop.data.card.Lake;
 import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
 import sk.stuba.fei.uim.oop.data.card.action.WildBill;
 import sk.stuba.fei.uim.oop.duck_hunt.Board;
@@ -23,11 +24,17 @@ public class Turboduck extends ActionCard {
         //TODO create a test and test this shit, I'm not sure whether is works
         var index = ZKlavesnice.readInt("What do you want to target");
         if (index > 6 || index < 1) {
-            System.out.println("Wrong index, try again");
+            System.out.println("Wrong index, try again from choosing index");
             action(player, board);
+            return;
         }
         //player has to choose exactly duck??
-        var chosenDuck = (Duck)board.getDuckActiveCards().get(index);
+        var chosenDuck = board.getDuckActiveCards().get(index-1);
+        if (chosenDuck.getClass().equals(Lake.class)) {
+            System.out.println("You have to choose duck exactly. Not water, try again from choosing index");
+            action(player, board);
+            return;
+        }
         var duckOnDesk = board.getDuckActiveCards();
         swapDucks(chosenDuck, duckOnDesk);
         //TODO проверить забираю ли я карты из колоды когда раздаю игрокам активити карты
@@ -36,7 +43,7 @@ public class Turboduck extends ActionCard {
         //TODO вероятно нужно заменить буул (прицел) у уток на булл (прицел) на поля
     }
 
-    public void swapDucks(Duck chosenDuck, List<DuckDeck> ducksOnDesk) {
+    public void swapDucks(DuckDeck chosenDuck, List<DuckDeck> ducksOnDesk) {
         for (int index = ducksOnDesk.indexOf(chosenDuck); index > 0; index --) {
             var nextDuck = ducksOnDesk.get(index - 1);
             ducksOnDesk.set(index, nextDuck);

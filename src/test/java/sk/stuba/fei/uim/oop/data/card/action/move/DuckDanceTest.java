@@ -1,22 +1,17 @@
 package sk.stuba.fei.uim.oop.data.card.action.move;
 
-import sk.stuba.fei.uim.oop.data.Player;
-import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
+import org.junit.Test;
 import sk.stuba.fei.uim.oop.duck_hunt.Board;
+import sk.stuba.fei.uim.oop.duck_hunt.DuckHunt;
 
 import java.util.Collections;
 
-public class DuckDance extends ActionCard {
+public class DuckDanceTest {
 
-    private final String name;
-
-    public DuckDance(String name) {
-        super(name);
-        this.name = name;
-    }
-
-    @Override
-    public void action(Player player, Board board) {
+    DuckHunt duckHunt = new DuckHunt();
+    Board board = new Board(duckHunt.getActionDeck(), duckHunt.getDuckDeck(), 2);
+    @Test
+    public void action() {
         var ducksOnDesk = board.getDuckActiveCards();
         var duckDeck = board.getDuckDeck();
         duckDeck.addAll(ducksOnDesk);

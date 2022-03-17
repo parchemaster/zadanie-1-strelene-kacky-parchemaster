@@ -15,7 +15,7 @@ import java.util.*;
 
 public class DuckHunt  {
     private List<Player> players = new ArrayList<>();
-    private List<ActionCard> actionCards;
+    private List<ActionCard> actionDeck;
     private List<DuckDeck> duckDeck;
     private Board board;
     private int currentPlayer;
@@ -25,7 +25,7 @@ public class DuckHunt  {
 //        System.out.println("Duck hunt is starting");
 //        int numberOfPlayers = ZKlavesnice.readInt("Enter the number of players");
 //        creatPlayer(numberOfPlayers);
-        this.actionCards = createActionCards();
+        this.actionDeck = createActionCards();
         this.duckDeck = createDuckDeck();
 //        createBord(numberOfPlayers);
         this.currentPlayer = currentPlayer;
@@ -34,9 +34,7 @@ public class DuckHunt  {
 
     //TODO go on here
     public void startGame() {
-        int numberOfPlayers = ZKlavesnice.readInt("Enter the number of players");
-        creatPlayer(numberOfPlayers);
-        createBord(numberOfPlayers);
+        creatPlayerAndBoard();
         System.out.println("--- GAME STARTED ---");
         for (this.currentPlayer = 0; getNumberActivePlayers() > 1; this.incrementCounter()) {
             if (this.currentPlayer == 0) {
@@ -48,18 +46,12 @@ public class DuckHunt  {
             }
             System.out.println("--- PLAYER " + activePlayer.getName() + " STARTS TURN ---");
             System.out.println("Player has: " + activePlayer.getDuckList().size() + " ducks");
-            while (activePlayer.getActionCards().size() < 3) {
-                activePlayer.dealCard(actionCards);
-            }
-            //TODO подумаю насчет прицела
-            board.getDuckActiveCards().forEach(duck -> System.out.println((board.getDuckActiveCards().indexOf(duck) + 1) + ": " + board.printDuckInfo(board.getDuckActiveCards().indexOf(duck))));
-            activePlayer.startAction(board);
-
+            activePlayer.dealActionCards(actionDeck);
+            board.getDuckActiveCards().forEach(duck
+                    -> System.out.println((board.getDuckActiveCards().indexOf(duck) + 1)
+                    + ": " + board.printDuckInfo(board.getDuckActiveCards().indexOf(duck))));
+            activePlayer.activateActionCard(board);
         }
-    }
-
-    private void createBord(int playersCount) {
-        board = new Board(actionCards, duckDeck, playersCount);
     }
 
     private void incrementCounter() {
@@ -68,9 +60,14 @@ public class DuckHunt  {
         this.roundCounter++;
     }
 
-    private void creatPlayer(int numberOfPlayers) {
+    private void creatPlayerAndBoard() {
+        int numberOfPlayers = ZKlavesnice.readInt("Enter the number of players");
+        board = new Board(actionDeck, duckDeck, numberOfPlayers);
         for (int index = 0; index < numberOfPlayers; index++) {
-            this.players.add(new Player(ZKlavesnice.readString("Enter PLAYER " + (index + 1) + " name:")));
+            var newPlayer = new Player(ZKlavesnice.readString("Enter PLAYER " + (index + 1) + " name:"));
+            newPlayer.dealActionCards(actionDeck);
+            this.players.add(newPlayer);
+
         }
     }
 
@@ -149,12 +146,12 @@ public class DuckHunt  {
         this.players = players;
     }
 
-    public List<ActionCard> getActionCards() {
-        return actionCards;
+    public List<ActionCard> getActionDeck() {
+        return actionDeck;
     }
 
-    public void setActionCards(List<ActionCard> actionCards) {
-        this.actionCards = actionCards;
+    public void setActionDeck(List<ActionCard> actionDeck) {
+        this.actionDeck = actionDeck;
     }
 
     public List<DuckDeck> getDuckDeck() {

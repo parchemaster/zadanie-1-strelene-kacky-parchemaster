@@ -3,13 +3,11 @@ package sk.stuba.fei.uim.oop.data;
 import sk.stuba.fei.uim.oop.data.card.Duck;
 import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
 import sk.stuba.fei.uim.oop.duck_hunt.Board;
-import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Player {
     private String name;
@@ -28,21 +26,20 @@ public class Player {
 
 
     //player gets action card
-    public void dealCard(List<ActionCard> actionDeck) {
-        getActionCards().add(actionDeck.get(0));
-        actionDeck.remove(actionDeck.get(0));
+    public void dealActionCards(List<ActionCard> actionDeck) {
+        while (this.getActionCards().size() < 3) {
+            getActionCards().add(actionDeck.get(0));
+            actionDeck.remove(0);
+        }
 //        System.out.println("Player " + getName() + " got new card");
     }
 
-    public void startAction(Board board) {
+    public void activateActionCard(Board board) {
         System.out.println("Player has: ");
-        for (ActionCard card : actionCards) {
-            int index = actionCards.indexOf(card) + 1;
-            System.out.println(index + ": " + card.getName());
-        }
+        actionCards.forEach(card -> System.out.println(actionCards.indexOf(card) + 1 + ": " + card.getName()));
         var number = ZKlavesnice.readInt("Choose your action: ");
         if (number > 3 || number < 1) {
-            startAction(board);
+            activateActionCard(board);
         }
         actionCards.get(number-1).action(this, board);
     }
