@@ -30,7 +30,5 @@ public class WildBill extends ActionCard{
         ducksOnDesk.add(duckDeck.get(0));
         duckDeck.remove(0);
         board.getAimField().set(index-1, false);
-        //TODO проверить забираю ли я карты из колоды когда раздаю игрокам активити карты
-
     }
 }

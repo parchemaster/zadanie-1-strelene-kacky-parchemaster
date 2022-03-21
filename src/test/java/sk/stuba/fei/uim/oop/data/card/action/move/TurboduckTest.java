@@ -12,7 +12,7 @@ import java.util.List;
 class TurboduckTest {
 
     DuckHunt duckHunt = new DuckHunt();
-    Board board = new Board(duckHunt.getActionDeck(), duckHunt.getDuckDeck(), 2);
+    Board board = new Board(duckHunt.getActionDeck(), duckHunt.getDuckDeck());
 
 
     @Test

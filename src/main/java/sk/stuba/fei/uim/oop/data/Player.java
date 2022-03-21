@@ -11,15 +11,13 @@ import java.util.Random;
 
 public class Player {
     private String name;
-    private List<Duck> duckList;
+    private List<Duck> duckList = new ArrayList<>();
     private List<ActionCard> actionCards;
     private boolean isActive;
-    private Random random = new Random();
 
     public Player(String name) {
         this.name = name;
         this.isActive = true;
-        duckList = createDucks();
         actionCards = new ArrayList<>();
     }
 
@@ -31,11 +29,10 @@ public class Player {
             getActionCards().add(actionDeck.get(0));
             actionDeck.remove(0);
         }
-//        System.out.println("Player " + getName() + " got new card");
     }
 
     public void activateActionCard(Board board) {
-        System.out.println("Player has: ");
+        System.out.println("Player " + getName() + " has : ");
         actionCards.forEach(card -> System.out.println(actionCards.indexOf(card) + 1 + ": " + card.getName()));
         var number = ZKlavesnice.readInt("Choose your action: ");
         if (number > 3 || number < 1) {
@@ -44,14 +41,6 @@ public class Player {
         actionCards.get(number-1).action(this, board);
     }
 
-
-    private List<Duck> createDucks() {
-        var ducks = new ArrayList<Duck>();
-        for (int i = 0; i < 5; i++) {
-            ducks.add(new Duck("Duck of player " + getName()));
-        }
-        return ducks;
-    }
 
     public List<ActionCard> getActionCards() {
         return actionCards;

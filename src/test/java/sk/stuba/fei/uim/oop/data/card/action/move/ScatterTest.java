@@ -9,7 +9,7 @@ import java.util.Collections;
 public class ScatterTest {
 
     DuckHunt duckHunt = new DuckHunt();
-    Board board = new Board(duckHunt.getActionDeck(), duckHunt.getDuckDeck(), 2);
+    Board board = new Board(duckHunt.getActionDeck(), duckHunt.getDuckDeck());
     @Test
     public void action() {
         var duckOnDesk = board.getDuckActiveCards();

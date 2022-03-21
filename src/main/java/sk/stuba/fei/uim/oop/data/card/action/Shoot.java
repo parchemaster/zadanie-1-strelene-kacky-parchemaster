@@ -15,16 +15,19 @@ public class Shoot extends ActionCard{
     @Override
     public void action(Player player, Board board) {
         var index = ZKlavesnice.readInt("What do you want to shoot");
-        var duck = board.getDuckActiveCards().get(index-1);
         if (index > 6 || index < 1 || !board.getAimField().get(index-1)) {
             System.out.println("Wrong index or duck has to be aimed at the first, try again from choosing action card");
             player.activateActionCard(board);
             return;
         }
+        var duck = board.getDuckActiveCards().get(index-1);
+        var ducksOnBoard = board.getDuckActiveCards();
+        var duckDeck = board.getDuckDeck();
         board.getActionDeck().add(new Shoot("Shoot"));
-        board.getDuckActiveCards().remove(duck);
+        ducksOnBoard.remove(duck);
         board.getAimField().set(index-1, false);
-        board.getDuckActiveCards().add(board.getDuckDeck().get(0));
+        ducksOnBoard.add(duckDeck.get(0));
+        duckDeck.remove(0);
         //TODO логика уменьшени утаки у игрока после подстрела определеной утки, не продуманна
     }
 }

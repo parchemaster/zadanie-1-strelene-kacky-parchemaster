@@ -16,15 +16,16 @@ public class Board  {
     private Random random = new Random();
 
 
-    public Board(List<ActionCard> actionDeck, List<DuckDeck> duckDeck, int playersCount) {
+    public Board(List<ActionCard> actionDeck, List<DuckDeck> duckDeck) {
         this.actionDeck = actionDeck;
         this.duckDeck = duckDeck;
         Collections.fill(aimField, Boolean.FALSE);
-        addDucksToDeck(playersCount);
+//        addDucksToDeck(playersCount);
         dealCards(6);
     }
 
 
+    // переворачивает карты уток и кладе их на стол
     public void dealCards(int count) {
         for (; duckActiveCards.size() < count;) {
             duckActiveCards.add(duckDeck.get(0));
@@ -32,15 +33,15 @@ public class Board  {
         }
     }
 
-    private void addDucksToDeck(int playersCount) {
-        for (int index = 0; index < playersCount; index ++) {
-            for (int countDuck = 0; countDuck < 5; countDuck ++) {
-                duckDeck.add(new Duck("Duck of player " + (index + 1)));
-            }
-        }
-        Collections.shuffle(duckDeck);
-        Collections.shuffle(duckDeck);
-    }
+//    private void addDucksToDeck(int playersCount) {
+//        for (int index = 0; index < playersCount; index ++) {
+//            for (int countDuck = 0; countDuck < 5; countDuck ++) {
+//                duckDeck.add(new Duck("Duck of player " + (index + 1)));
+//            }
+//        }
+//        Collections.shuffle(duckDeck);
+//        Collections.shuffle(duckDeck);
+//    }
 
     public List<Boolean> getAimField() {
         return aimField;

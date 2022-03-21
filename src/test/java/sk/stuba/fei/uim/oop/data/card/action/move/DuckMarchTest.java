@@ -7,7 +7,7 @@ import sk.stuba.fei.uim.oop.duck_hunt.DuckHunt;
 public class DuckMarchTest {
 
     DuckHunt duckHunt = new DuckHunt();
-    Board board = new Board(duckHunt.getActionDeck(), duckHunt.getDuckDeck(), 2);
+    Board board = new Board(duckHunt.getActionDeck(), duckHunt.getDuckDeck());
     @Test
     public void action() {
         board.getActionDeck().add(new DuckMarch("Duck March"));
