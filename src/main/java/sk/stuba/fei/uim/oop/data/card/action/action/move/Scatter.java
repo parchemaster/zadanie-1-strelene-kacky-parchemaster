@@ -1,7 +1,6 @@
-package sk.stuba.fei.uim.oop.data.card.action.move;
+package sk.stuba.fei.uim.oop.data.card.action.action.move;
 
 import sk.stuba.fei.uim.oop.data.Player;
-import sk.stuba.fei.uim.oop.data.card.Duck;
 import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
 import sk.stuba.fei.uim.oop.duck_hunt.Board;
 
@@ -15,9 +14,11 @@ public class Scatter extends ActionCard {
         super(name);
         this.name = name;
     }
+
     @Override
     public void action(Player player, Board board) {
         var duckOnDesk = board.getDuckActiveCards();
+        board.getActionDeck().add(new Scatter("Scatter"));
         Collections.shuffle(duckOnDesk);
         Collections.shuffle(duckOnDesk);
     }

@@ -1,7 +1,6 @@
-package sk.stuba.fei.uim.oop.data.card.action.move;
+package sk.stuba.fei.uim.oop.data.card.action.action.move;
 
 import sk.stuba.fei.uim.oop.data.Player;
-import sk.stuba.fei.uim.oop.data.card.Duck;
 import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
 import sk.stuba.fei.uim.oop.duck_hunt.Board;
 

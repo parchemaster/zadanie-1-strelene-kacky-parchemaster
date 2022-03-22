@@ -5,6 +5,8 @@ import sk.stuba.fei.uim.oop.data.card.Duck;
 import sk.stuba.fei.uim.oop.duck_hunt.Board;
 import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 
+import java.util.List;
+
 public class Shoot extends ActionCard{
     private final String name;
 
@@ -20,14 +22,26 @@ public class Shoot extends ActionCard{
             player.activateActionCard(board);
             return;
         }
-        var duck = board.getDuckActiveCards().get(index-1);
+        var shotDuck = board.getDuckActiveCards().get(index-1);
         var ducksOnBoard = board.getDuckActiveCards();
         var duckDeck = board.getDuckDeck();
+        var players = board.getPlayers();
         board.getActionDeck().add(new Shoot("Shoot"));
-        ducksOnBoard.remove(duck);
+        ducksOnBoard.remove(shotDuck);
+        if (shotDuck instanceof Duck) removePlayerDuck(players, (Duck)shotDuck);
         board.getAimField().set(index-1, false);
         ducksOnBoard.add(duckDeck.get(0));
         duckDeck.remove(0);
         //TODO логика уменьшени утаки у игрока после подстрела определеной утки, не продуманна
     }
+
+    public void removePlayerDuck(List<Player> players, Duck duck) {
+        for (var player : players) {
+            if (player.getDuckList().contains(duck)) {
+                player.getDuckList().remove(duck);
+                break;
+            }
+        }
+    }
+
 }

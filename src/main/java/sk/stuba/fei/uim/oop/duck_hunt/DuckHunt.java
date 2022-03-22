@@ -8,7 +8,7 @@ import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
 import sk.stuba.fei.uim.oop.data.card.action.Aim;
 import sk.stuba.fei.uim.oop.data.card.action.Shoot;
 import sk.stuba.fei.uim.oop.data.card.action.WildBill;
-import sk.stuba.fei.uim.oop.data.card.action.move.*;
+import sk.stuba.fei.uim.oop.data.card.action.action.move.*;
 import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 
 import java.util.*;
@@ -40,25 +40,41 @@ public class DuckHunt  {
             if (!activePlayer.isActive()) {
                 continue;
             }
-            if (!board.getDuckActiveCards().contains(activePlayer.getDuckList().get(0))
-                    && !duckDeck.contains(activePlayer.getDuckList().get(0))) {
+
+            //TODO items.removeIf(item -> item.num == number);
+            if (activePlayer.getDuckList().size() < 1) {
                 System.out.println("Player " + activePlayer.getName() + " lost");
                 activePlayer.setActive(false);
                 actionDeck.addAll(activePlayer.getActionCards());
                 //TODO карты проиграный игрок кладет в калоду?
+                // TODO нужно переделать усдловие
                 continue;
             }
             System.out.println("--- PLAYER " + activePlayer.getName() + " STARTS TURN ---");
             System.out.println("Player " + activePlayer.getName()
                     + " has: " + activePlayer.getDuckList().size()
                     + " ducks");
-            activePlayer.dealActionCards(actionDeck);
-            board.getDuckActiveCards().forEach(duck
-                    -> System.out.println((board.getDuckActiveCards().indexOf(duck) + 1)
-                    + ": " + board.printDuckInfo(board.getDuckActiveCards().indexOf(duck))));
+//            board.getDuckActiveCards().forEach(duck
+//                    -> System.out.println((board.getDuckActiveCards().indexOf(duck) + 1)
+//                    + ": " + board.printDuckInfo(board.getDuckActiveCards().indexOf(duck))));
+            try {
+                board.getDuckActiveCards().forEach(duck -> {
+                    var index = board.getDuckActiveCards().indexOf(duck);
+                    System.out.println((index + 1) + ": " + board.printDuckInfo(index));
+                });
+            }
+            catch (IndexOutOfBoundsException e) {
+                System.out.println("Error");
+            }
             activePlayer.activateActionCard(board);
         }
     }
+
+    // TODO
+    //  POZOR: Kartu musí zahrať aj v prípade, ak by musel zastreliť svoju kačku.
+    //  Pokiaľ sa žiadna karta nedá logicky zahrať
+    //  (hráč ma na ruke 3 karty Strieľaj ale nie je zamierené na žiadne políčko v rybníku),
+    //  tak musí jednu kartu zahodiť na spodok balíčka akčných kariet , a vziať si z neho inú (v tomto kole hráč nehrá žiadnu kartu).
 
     private void incrementCounter() {
         this.currentPlayer++;
@@ -70,11 +86,14 @@ public class DuckHunt  {
         int numberOfPlayers = ZKlavesnice.readInt("Enter the number of players");
         for (int index = 0; index < numberOfPlayers; index++) {
             var newPlayer = new Player(ZKlavesnice.readString("Enter PLAYER " + (index + 1) + " name:"));
-            newPlayer.dealActionCards(actionDeck);
+            while (newPlayer.getActionCards().size() < 3) {
+                newPlayer.dealActionCards(actionDeck);
+            }
             this.players.add(newPlayer);
             createPlayerDucks(newPlayer);
         }
-        board = new Board(actionDeck, duckDeck);
+        board = new Board(actionDeck, duckDeck, players);
+        board.dealCards(6);
     }
 
     private void createPlayerDucks(Player player) {
@@ -90,9 +109,9 @@ public class DuckHunt  {
 
     private int getNumberActivePlayers() {
         var sum = 0;
-        for (Player player : players) {
-            sum += player.isActive() ? 1 : 0;
-        }
+//        for (Player player : players) {
+//            sum += player.isActive() ? 1 : 0;
+//        }
         sum += players.stream().mapToInt(player -> player.isActive() ? 1 : 0).sum();
         return sum;
     }

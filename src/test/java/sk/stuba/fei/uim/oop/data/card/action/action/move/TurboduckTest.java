@@ -1,4 +1,4 @@
-package sk.stuba.fei.uim.oop.data.card.action.move;
+package sk.stuba.fei.uim.oop.data.card.action.action.move;
 
 
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import java.util.List;
 class TurboduckTest {
 
     DuckHunt duckHunt = new DuckHunt();
-    Board board = new Board(duckHunt.getActionDeck(), duckHunt.getDuckDeck());
+    Board board = new Board(duckHunt.getActionDeck(), duckHunt.getDuckDeck(), duckHunt.getPlayers());
 
 
     @Test
