@@ -12,7 +12,7 @@ public class ScatterTest {
     Board board = new Board(duckHunt.getActionDeck(), duckHunt.getDuckDeck(), duckHunt.getPlayers());
     @Test
     public void action() {
-        var duckOnDesk = board.getDuckActiveCards();
+        var duckOnDesk = board.getDucksOnBoard();
         Collections.shuffle(duckOnDesk);
         Collections.shuffle(duckOnDesk);
     }

@@ -12,7 +12,7 @@ public class DuckDanceTest {
     Board board = new Board(duckHunt.getActionDeck(), duckHunt.getDuckDeck(), duckHunt.getPlayers());
     @Test
     public void action() {
-        var ducksOnDesk = board.getDuckActiveCards();
+        var ducksOnDesk = board.getDucksOnBoard();
         var duckDeck = board.getDuckDeck();
         duckDeck.addAll(ducksOnDesk);
         ducksOnDesk.removeAll(ducksOnDesk);

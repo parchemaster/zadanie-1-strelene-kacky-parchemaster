@@ -16,11 +16,11 @@ public class WildBillTest {
             System.out.println("Wrong index, try again");
             action();
         }
-        var duck = board.getDuckActiveCards().get(index);
-        var ducksOnDesk = board.getDuckActiveCards();
+        var duck = board.getDucksOnBoard().get(index);
+        var ducksOnDesk = board.getDucksOnBoard();
         board.getActionDeck().add(new WildBill("Wild Bill"));
         ducksOnDesk.remove(duck);
         board.getAimField().set(index, false);
-        board.getDuckActiveCards().add(board.getDuckDeck().get(0));
+        board.getDucksOnBoard().add(board.getDuckDeck().get(0));
     }
 }

@@ -8,16 +8,13 @@ import java.util.Collections;
 
 public class Scatter extends ActionCard {
 
-    private final String name;
-
     public Scatter(String name) {
         super(name);
-        this.name = name;
     }
 
     @Override
     public void action(Player player, Board board) {
-        var duckOnDesk = board.getDuckActiveCards();
+        var duckOnDesk = board.getDucksOnBoard();
         board.getActionDeck().add(new Scatter("Scatter"));
         Collections.shuffle(duckOnDesk);
         Collections.shuffle(duckOnDesk);

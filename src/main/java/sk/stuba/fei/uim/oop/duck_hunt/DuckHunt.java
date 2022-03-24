@@ -14,9 +14,9 @@ import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 import java.util.*;
 
 
-public class DuckHunt  {
-    private List<Player> players = new ArrayList<>();
-    private List<ActionCard> actionDeck;
+public class DuckHunt {
+    private final List<Player> players = new ArrayList<>();
+    private final List<ActionCard> actionDeck;
     private List<DuckDeck> duckDeck;
     private Board board;
     private int currentPlayer;
@@ -25,10 +25,9 @@ public class DuckHunt  {
     public DuckHunt() {
         this.actionDeck = createActionCards();
         this.duckDeck = createDuckDeck();
-        this.currentPlayer = currentPlayer;
-        this.roundCounter = roundCounter;
     }
 
+    // basic logic of the game
     public void startGame() {
         creatPlayersAndBoard();
         System.out.println("--- GAME STARTED ---");
@@ -37,44 +36,24 @@ public class DuckHunt  {
                 System.out.println("--- ROUND " + (this.roundCounter / this.players.size() + 1) + " STARTS ---");
             }
             Player activePlayer = this.players.get(this.currentPlayer);
-            if (!activePlayer.isActive()) {
-                continue;
-            }
-
-            //TODO items.removeIf(item -> item.num == number);
             if (activePlayer.getDuckList().size() < 1) {
                 System.out.println("Player " + activePlayer.getName() + " lost");
                 activePlayer.setActive(false);
                 actionDeck.addAll(activePlayer.getActionCards());
-                //TODO карты проиграный игрок кладет в калоду?
-                // TODO нужно переделать усдловие
+                players.remove(activePlayer);
                 continue;
             }
             System.out.println("--- PLAYER " + activePlayer.getName() + " STARTS TURN ---");
             System.out.println("Player " + activePlayer.getName()
                     + " has: " + activePlayer.getDuckList().size()
                     + " ducks");
-//            board.getDuckActiveCards().forEach(duck
-//                    -> System.out.println((board.getDuckActiveCards().indexOf(duck) + 1)
-//                    + ": " + board.printDuckInfo(board.getDuckActiveCards().indexOf(duck))));
-            try {
-                board.getDuckActiveCards().forEach(duck -> {
-                    var index = board.getDuckActiveCards().indexOf(duck);
-                    System.out.println((index + 1) + ": " + board.printDuckInfo(index));
-                });
-            }
-            catch (IndexOutOfBoundsException e) {
-                System.out.println("Error");
-            }
+            board.getDucksOnBoard().forEach(duck
+                    -> System.out.println((board.getDucksOnBoard().indexOf(duck) + 1)
+                    + ": " + board.printDuckInfo(board.getDucksOnBoard().indexOf(duck))));
             activePlayer.activateActionCard(board);
         }
+        System.out.println("Player " + players.get(0).getName() + " won");
     }
-
-    // TODO
-    //  POZOR: Kartu musí zahrať aj v prípade, ak by musel zastreliť svoju kačku.
-    //  Pokiaľ sa žiadna karta nedá logicky zahrať
-    //  (hráč ma na ruke 3 karty Strieľaj ale nie je zamierené na žiadne políčko v rybníku),
-    //  tak musí jednu kartu zahodiť na spodok balíčka akčných kariet , a vziať si z neho inú (v tomto kole hráč nehrá žiadnu kartu).
 
     private void incrementCounter() {
         this.currentPlayer++;
@@ -82,8 +61,14 @@ public class DuckHunt  {
         this.roundCounter++;
     }
 
+    // creates players and bord
     private void creatPlayersAndBoard() {
         int numberOfPlayers = ZKlavesnice.readInt("Enter the number of players");
+        if (numberOfPlayers < 2 || numberOfPlayers > 7) {
+            System.out.println("You can play this game with 2 to 6 people");
+            creatPlayersAndBoard();
+            return;
+        }
         for (int index = 0; index < numberOfPlayers; index++) {
             var newPlayer = new Player(ZKlavesnice.readString("Enter PLAYER " + (index + 1) + " name:"));
             while (newPlayer.getActionCards().size() < 3) {
@@ -96,6 +81,7 @@ public class DuckHunt  {
         board.dealCards(6);
     }
 
+    // creates 5 duck for player and adds those ducks to deck
     private void createPlayerDucks(Player player) {
         var ducks = new ArrayList<Duck>();
         for (int i = 0; i < 5; i++) {
@@ -109,9 +95,6 @@ public class DuckHunt  {
 
     private int getNumberActivePlayers() {
         var sum = 0;
-//        for (Player player : players) {
-//            sum += player.isActive() ? 1 : 0;
-//        }
         sum += players.stream().mapToInt(player -> player.isActive() ? 1 : 0).sum();
         return sum;
     }
@@ -123,9 +106,9 @@ public class DuckHunt  {
         cards.add(new Lake("Water"));
         cards.add(new Lake("Water"));
         cards.add(new Lake("Water"));
-        return  cards;
+        return cards;
     }
-    
+
     private List<ActionCard> createActionCards() {
         var cards = new ArrayList<ActionCard>();
         cards.add(new DuckMarch("Duck March"));
@@ -178,16 +161,8 @@ public class DuckHunt  {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-
     public List<ActionCard> getActionDeck() {
         return actionDeck;
-    }
-
-    public void setActionDeck(List<ActionCard> actionDeck) {
-        this.actionDeck = actionDeck;
     }
 
     public List<DuckDeck> getDuckDeck() {
@@ -204,21 +179,5 @@ public class DuckHunt  {
 
     public void setBoard(Board board) {
         this.board = board;
-    }
-
-    public int getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(int currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
-    public int getRoundCounter() {
-        return roundCounter;
-    }
-
-    public void setRoundCounter(int roundCounter) {
-        this.roundCounter = roundCounter;
     }
 }

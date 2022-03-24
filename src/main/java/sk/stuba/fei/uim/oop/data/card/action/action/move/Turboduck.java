@@ -11,36 +11,29 @@ import java.util.List;
 
 public class Turboduck extends ActionCard {
 
-    private final String name;
-
     public Turboduck(String name) {
         super(name);
-        this.name = name;
     }
     @Override
     public void action(Player player, Board board) {
-        //TODO create a test and test this shit, I'm not sure whether is works
         var index = ZKlavesnice.readInt("What do you want to choose");
         if (index > 6 || index < 1) {
             System.out.println("Wrong index, try again from choosing index");
             action(player, board);
             return;
         }
-        //player has to choose exactly duck??
-        var chosenDuck = board.getDuckActiveCards().get(index-1);
+        var chosenDuck = board.getDucksOnBoard().get(index-1);
         if (chosenDuck.getClass().equals(Lake.class)) {
             System.out.println("You have to choose duck exactly. Not water, try again from choosing index");
             action(player, board);
             return;
         }
-        var duckOnDesk = board.getDuckActiveCards();
+        var duckOnDesk = board.getDucksOnBoard();
         swapDucks(chosenDuck, duckOnDesk);
         board.getActionDeck().add(new Turboduck("Turbo duck"));
-        //TODO check if I remove action cards from players
-        //TODO вероятно нужно заменить буул (прицел) у уток на булл (прицел) на поля
     }
 
-    public void swapDucks(DuckDeck chosenDuck, List<DuckDeck> ducksOnDesk) {
+    private void swapDucks(DuckDeck chosenDuck, List<DuckDeck> ducksOnDesk) {
         for (int index = ducksOnDesk.indexOf(chosenDuck); index > 0; index --) {
             var nextDuck = ducksOnDesk.get(index - 1);
             ducksOnDesk.set(index, nextDuck);

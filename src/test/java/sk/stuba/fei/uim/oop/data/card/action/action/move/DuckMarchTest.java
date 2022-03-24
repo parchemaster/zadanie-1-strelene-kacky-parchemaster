@@ -11,9 +11,9 @@ public class DuckMarchTest {
     @Test
     public void action() {
         board.getActionDeck().add(new DuckMarch("Duck March"));
-        var firstDuckOnBoard = board.getDuckActiveCards().get(0);
+        var firstDuckOnBoard = board.getDucksOnBoard().get(0);
         var duckDeck = board.getDuckDeck();
-        var ducksOnBoard = board.getDuckActiveCards();
+        var ducksOnBoard = board.getDucksOnBoard();
         ducksOnBoard.remove(firstDuckOnBoard);
         ducksOnBoard.add(duckDeck.get(0));
         duckDeck.add(firstDuckOnBoard);

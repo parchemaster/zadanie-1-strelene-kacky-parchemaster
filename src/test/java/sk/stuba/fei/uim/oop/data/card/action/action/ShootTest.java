@@ -13,14 +13,14 @@ public class ShootTest {
     @Test
     public void action() {
         var index = 3;
-        var duck = board.getDuckActiveCards().get(index);
+        var duck = board.getDucksOnBoard().get(index);
         if (index > 6 || index < 1 && !board.getAimField().get(index)) {
             System.out.println("Wrong index or duck has to be aimed at the first, try again");
             action();
         }
         board.getActionDeck().add(new Shoot("Shoot"));
-        board.getDuckActiveCards().remove(duck);
+        board.getDucksOnBoard().remove(duck);
         board.getAimField().set(index, false);
-        board.getDuckActiveCards().add(board.getDuckDeck().get(0));
+        board.getDucksOnBoard().add(board.getDuckDeck().get(0));
     }
 }
