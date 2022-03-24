@@ -1,6 +1,7 @@
 package sk.stuba.fei.uim.oop.utility;
 
 import java.io.*;
+import java.util.Random;
 
 public class ZKlavesnice {
 
@@ -35,7 +36,7 @@ public class ZKlavesnice {
         return s;
     }
 
-    public static int readInt(String napis_pre_uzivatela) {
+    public static int readInt(String napis_pre_uzivatela, int diapason) {
         int n = 0;
         String s;
 
@@ -46,7 +47,13 @@ public class ZKlavesnice {
             n = Integer.parseInt(s);
         } catch (Exception e) {
             System.out.println("nepodarilo sa");
-            n = readInt(napis_pre_uzivatela);
+            n = readInt(napis_pre_uzivatela, diapason);
+        }
+
+        if (n < 1 || n > diapason + 1)
+        {
+            System.out.println("nepodarilo se");
+            n = readInt(napis_pre_uzivatela, diapason);
         }
 
         return n;

@@ -51,6 +51,8 @@ public class DuckHunt {
                     -> System.out.println((board.getDucksOnBoard().indexOf(duck) + 1)
                     + ": " + board.printDuckInfo(board.getDucksOnBoard().indexOf(duck))));
             activePlayer.activateActionCard(board);
+//            activePlayer.getActionCards().remove(activePlayer.getChosenCard());
+//            activePlayer.dealActionCards(board.getActionDeck());
         }
         System.out.println("Player " + players.get(0).getName() + " won");
     }
@@ -63,7 +65,7 @@ public class DuckHunt {
 
     // creates players and bord
     private void creatPlayersAndBoard() {
-        int numberOfPlayers = ZKlavesnice.readInt("Enter the number of players");
+        int numberOfPlayers = ZKlavesnice.readInt("Enter the number of players", 6);
         if (numberOfPlayers < 2 || numberOfPlayers > 7) {
             System.out.println("You can play this game with 2 to 6 people");
             creatPlayersAndBoard();

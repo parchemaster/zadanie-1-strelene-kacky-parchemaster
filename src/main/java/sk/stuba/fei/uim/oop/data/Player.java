@@ -1,6 +1,7 @@
 package sk.stuba.fei.uim.oop.data;
 
 import sk.stuba.fei.uim.oop.data.card.Duck;
+import sk.stuba.fei.uim.oop.data.card.DuckDeck;
 import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
 import sk.stuba.fei.uim.oop.duck_hunt.Board;
 import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
@@ -13,6 +14,7 @@ public class Player {
     private final List<Duck> duckList = new ArrayList<>();
     private final List<ActionCard> actionCards;
     private boolean isActive;
+    private ActionCard chosenCard;
 
     public Player(String name) {
         this.name = name;
@@ -31,14 +33,13 @@ public class Player {
         System.out.println("Player " + getName() + " has : ");
         actionCards.forEach(card -> System.out.println(actionCards.indexOf(card) + 1 + ": " + card.getName()));
         if (!isExceptionShoot(board)) {
-            var number = ZKlavesnice.readInt("Choose your action: ");
-            if (number > 3 || number < 1) {
-                activateActionCard(board);
-                return;
-            }
+            var number = ZKlavesnice.readInt("Choose your action: ", 3);
+//            if (number > 3 || number < 1) {
+//                activateActionCard(board);
+//                return;
+//            }
             actionCards.get(number - 1).action(this, board);
-            actionCards.remove(number - 1);
-            dealActionCards(board.getActionDeck());
+            setChosenCard(getActionCards().get(number-1));
         }
     }
 
@@ -91,5 +92,13 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ActionCard getChosenCard() {
+        return chosenCard;
+    }
+
+    public void setChosenCard(ActionCard chosenCard) {
+        this.chosenCard = chosenCard;
     }
 }

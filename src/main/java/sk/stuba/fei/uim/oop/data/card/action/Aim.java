@@ -12,8 +12,8 @@ public class Aim extends ActionCard{
 
     @Override
     public void action(Player player, Board board) {
-        var index = ZKlavesnice.readInt("What do you want to target");
-        if ((index > 6 || index < 1) || board.getAimField().get(index-1)) {
+        var index = ZKlavesnice.readInt("What do you want to target", 6);
+        if (board.getAimField().get(index-1)) {
             System.out.println("Wrong index or duck is already aimed, try again");
             player.activateActionCard(board);
             return;
