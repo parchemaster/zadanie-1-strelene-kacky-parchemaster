@@ -53,11 +53,9 @@ public class Player {
             }
             if (!isAnyAimed) {
                 System.out.println("!!! You cant play any your shoot card, because there is no one aimed duck !!!");
-                var changeCard = actionCards.get(0);
                 var actionDeck = board.getActionDeck();
-                actionDeck.add(actionDeck.size(), changeCard);
-                getActionCards().remove(changeCard);
-                dealActionCards(actionDeck);
+                actionDeck.add(actionDeck.size(), getActionCards().get(0));
+                setChosenCard(getActionCards().get(0));
                 isAimedException = true;
             }
         }
