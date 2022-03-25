@@ -7,7 +7,7 @@ import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
 
 import java.util.*;
 
-public class Board  {
+public class Board {
     private final List<Boolean> aimField = new ArrayList<Boolean>(Arrays.asList(new Boolean[6]));
     private final List<DuckDeck> ducksOnBoard = new ArrayList<>();
     private final List<ActionCard> actionDeck;

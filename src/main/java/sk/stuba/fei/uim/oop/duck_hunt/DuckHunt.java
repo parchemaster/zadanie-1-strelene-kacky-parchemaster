@@ -51,8 +51,8 @@ public class DuckHunt {
                     -> System.out.println((board.getDucksOnBoard().indexOf(duck) + 1)
                     + ": " + board.printDuckInfo(board.getDucksOnBoard().indexOf(duck))));
             activePlayer.activateActionCard(board);
-//            activePlayer.getActionCards().remove(activePlayer.getChosenCard());
-//            activePlayer.dealActionCards(board.getActionDeck());
+            activePlayer.getActionCards().remove(activePlayer.getChosenCard());
+            activePlayer.dealActionCards(board.getActionDeck());
         }
         System.out.println("Player " + players.get(0).getName() + " won");
     }

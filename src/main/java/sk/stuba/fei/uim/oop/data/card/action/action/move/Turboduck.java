@@ -17,11 +17,6 @@ public class Turboduck extends ActionCard {
     @Override
     public void action(Player player, Board board) {
         var index = ZKlavesnice.readInt("What do you want to choose", 6);
-//        if (index > 6 || index < 1) {
-//            System.out.println("Wrong index, try again from choosing index");
-//            action(player, board);
-//            return;
-//        }
         var chosenDuck = board.getDucksOnBoard().get(index-1);
         if (chosenDuck.getClass().equals(Lake.class)) {
             System.out.println("You have to choose duck exactly. Not water, try again from choosing index");

@@ -13,14 +13,8 @@ public class WildBill extends ActionCard{
     @Override
     public void action(Player player, Board board) {
         var index = ZKlavesnice.readInt("What do you want to target", 6);
-//        if (index > 6 || index < 1) {
-//            System.out.println("Wrong index, try again from choosing index");
-//            action(player, board);
-//            return;
-//        }
         var shotDuck = board.getDucksOnBoard().get(index-1);
         var ducksOnBoard = board.getDucksOnBoard();
-        var duckDeck = board.getDuckDeck();
         var players = board.getPlayers();
         board.getActionDeck().add(new WildBill("Wild Bill"));
         if (shotDuck instanceof Duck) {

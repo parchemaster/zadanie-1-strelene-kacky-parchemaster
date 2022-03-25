@@ -1,7 +1,6 @@
 package sk.stuba.fei.uim.oop.data;
 
 import sk.stuba.fei.uim.oop.data.card.Duck;
-import sk.stuba.fei.uim.oop.data.card.DuckDeck;
 import sk.stuba.fei.uim.oop.data.card.action.ActionCard;
 import sk.stuba.fei.uim.oop.duck_hunt.Board;
 import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
@@ -34,12 +33,9 @@ public class Player {
         actionCards.forEach(card -> System.out.println(actionCards.indexOf(card) + 1 + ": " + card.getName()));
         if (!isExceptionShoot(board)) {
             var number = ZKlavesnice.readInt("Choose your action: ", 3);
-//            if (number > 3 || number < 1) {
-//                activateActionCard(board);
-//                return;
-//            }
-            actionCards.get(number - 1).action(this, board);
+            System.out.println(actionCards.get(number-1).getName());
             setChosenCard(getActionCards().get(number-1));
+            actionCards.get(number - 1).action(this, board);
         }
     }
 
@@ -57,7 +53,7 @@ public class Player {
                 }
             }
             if (!isAnyAimed) {
-                System.out.println("!!! You cant play any your shoot card, because there is no one aimed duck!!!");
+                System.out.println("!!! You cant play any your shoot card, because there is no one aimed duck !!!");
                 var changeCard = actionCards.get(0);
                 var actionDeck = board.getActionDeck();
                 actionDeck.add(actionDeck.size(), changeCard);
@@ -94,11 +90,11 @@ public class Player {
         this.name = name;
     }
 
-    public ActionCard getChosenCard() {
-        return chosenCard;
-    }
-
     public void setChosenCard(ActionCard chosenCard) {
         this.chosenCard = chosenCard;
+    }
+
+    public ActionCard getChosenCard() {
+        return chosenCard;
     }
 }

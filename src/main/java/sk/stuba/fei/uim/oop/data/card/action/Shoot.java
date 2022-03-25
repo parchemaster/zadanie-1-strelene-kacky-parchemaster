@@ -20,14 +20,11 @@ public class Shoot extends ActionCard{
         }
         var ducksOnBoard = board.getDucksOnBoard();
         var shotDuck = board.getDucksOnBoard().get(index-1);
-        var duckDeck = board.getDuckDeck();
         var players = board.getPlayers();
         board.getActionDeck().add(new Shoot("Shoot"));
         if (shotDuck instanceof Duck) {
             removePlayerDuck(players, (Duck)shotDuck);
             ducksOnBoard.remove(shotDuck);
-//            duckDeck.remove(0);
-//            ducksOnBoard.add(duckDeck.get(0));
             board.dealCards(1);
         }
         board.getAimField().set(index-1, false);
