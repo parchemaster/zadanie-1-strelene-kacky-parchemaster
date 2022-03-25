@@ -1,7 +1,6 @@
 package sk.stuba.fei.uim.oop.utility;
 
 import java.io.*;
-import java.util.Random;
 
 public class ZKlavesnice {
 
@@ -40,22 +39,20 @@ public class ZKlavesnice {
         int n = 0;
         String s;
 
-//        BufferedReader zklavesnice = new BufferedReader(new InputStreamReader(System.in));
-//        try {	System.out.println(napis_pre_uzivatela);
-//            s = zklavesnice.readLine();
-//            //System.out.println("Nacital som " + s);
-//            n = Integer.parseInt(s);
-//        } catch (Exception e) {
-//            System.out.println("nepodarilo sa");
-//            n = readInt(napis_pre_uzivatela, diapason);
-//        }
+        BufferedReader zklavesnice = new BufferedReader(new InputStreamReader(System.in));
+        try {	System.out.println(napis_pre_uzivatela);
+            s = zklavesnice.readLine();
+            //System.out.println("Nacital som " + s);
+            n = Integer.parseInt(s);
+        } catch (Exception e) {
+            System.out.println("nepodarilo sa");
+            n = readInt(napis_pre_uzivatela, diapason);
+        }
 
-        var aa = new Random();
-        n = aa.nextInt(6) + 1;
         while (n < 1 || n > diapason)
         {
             System.out.println("nepodarilo se");
-            n = aa.nextInt(6) + 1;
+            n = readInt(napis_pre_uzivatela, diapason);
         }
 
         return n;
