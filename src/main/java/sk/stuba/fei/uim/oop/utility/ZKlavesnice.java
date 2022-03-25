@@ -50,7 +50,7 @@ public class ZKlavesnice {
             n = readInt(napis_pre_uzivatela, diapason);
         }
 
-        if (n < 1 || n > diapason + 1)
+        while (n < 1 || n > diapason)
         {
             System.out.println("nepodarilo se");
             n = readInt(napis_pre_uzivatela, diapason);

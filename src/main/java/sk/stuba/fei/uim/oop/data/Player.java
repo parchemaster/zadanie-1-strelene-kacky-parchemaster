@@ -33,7 +33,6 @@ public class Player {
         actionCards.forEach(card -> System.out.println(actionCards.indexOf(card) + 1 + ": " + card.getName()));
         if (!isExceptionShoot(board)) {
             var number = ZKlavesnice.readInt("Choose your action: ", 3);
-            System.out.println(actionCards.get(number-1).getName());
             setChosenCard(getActionCards().get(number-1));
             actionCards.get(number - 1).action(this, board);
         }
